@@ -1,0 +1,46 @@
+<div class="question-form">
+  <h3>Create Question</h3>
+  <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="title-input">
+      <mat-label>Question</mat-label>
+      <input matInput placeholder="" formControlName="text">
+    </mat-form-field>
+
+    <div>
+      <label>Question Type: </label>
+      <br>
+      <mat-radio-group formControlName="questionType">
+        <mat-radio-button value="open">Open</mat-radio-button>
+        <br>
+        <mat-radio-button value="singleSelect">Single Choice</mat-radio-button>
+        <br>
+        <mat-radio-button value="multiSelect">Multiple Choice</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div *ngIf="questionForm.value.questionType !== 'open'" formArrayName="options">
+      <p>Please add two or more options</p>
+      <div class="option-fields" *ngFor="let item of controls; let i=index" [formGroupName]="i">
+        <mat-form-field appearance="fill" class="title-input">
+          <mat-label>Option {{i+1}}</mat-label>
+          <input matInput placeholder="Please enter an option" formControlName="optionText">
+        </mat-form-field>
+        <button mat-mini-fab class="" color="warn" matTooltip="Delete option" aria-label="" (click)="onDeleteOption(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button color="accent" type="button" class="" aria-label="" (click)="onAddOption()">
+        <mat-icon>add</mat-icon> Add option
+      </button>
+    </div>
+
+    <div>
+      <button mat-raised-button color="accent" class="" [disabled]="questionForm.invalid" aria-label="" type="submit">
+        <mat-icon>save</mat-icon> Save Question
+      </button>
+      <button mat-raised-button color="warn" class="" aria-label="" (click)="cancel()">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </div>
+  </form>
+</div>

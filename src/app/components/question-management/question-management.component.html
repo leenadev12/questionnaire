@@ -1,0 +1,39 @@
+<div class="mat-elevation-z8 question-table">
+  <table mat-table [dataSource]="questionData">
+
+    <ng-container matColumnDef="text">
+      <th mat-header-cell *matHeaderCellDef> Question </th>
+      <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="questionType">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.questionType === 'open' ? questionsTypes.open : element.questionType === 'singleSelect'? questionsTypes.singleSelect : questionsTypes.multiSelect}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell *matHeaderCellDef> Create Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.createdDate | date : 'dd/MM/yy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <button mat-mini-fab class="" aria-label="">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" matTooltip="Delete Question" aria-label="delete question" (click)="deleteQuestion(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
