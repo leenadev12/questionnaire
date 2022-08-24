@@ -4,5 +4,5 @@ export interface openQuestion {
   questionType: questionTypes;
   title: string;
   answer: string;
-  createTime: string;
+  createdDate: string;
 }

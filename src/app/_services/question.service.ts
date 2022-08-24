@@ -10,7 +10,7 @@ export class QuestionService {
   changedQuestions = new Subject<question[]>();
   constructor() {}
 
-  getQuestion() {
+  getQuestionList() {
     let temp = localStorage.getItem("questions");
     if (!temp) {
       localStorage.setItem("questions", '{}');
@@ -20,18 +20,27 @@ export class QuestionService {
     this.changedQuestions.next(this.questions.slice());
     return this.questions;
   }
+
   addQuestion(question: question) {
     this.questions.push(question)
-    // localStorage.setItem("questions", JSON.stringify(this.questions))
     this.saveData();
     this.changedQuestions.next(this.questions.slice());
   }
-  deleteQuestion(index: number) {
-    this.questions.splice(index, 1);
-    // localStorage.setItem("questions", JSON.stringify(this.questions))
+
+  updateQuestion(index: number, question: question) {
+    this.questions.splice(index, 1, question);
     this.saveData();
     this.changedQuestions.next(this.questions.slice());
-    // return this.questions;
+  }
+
+  deleteQuestion(index: number) {
+    this.questions.splice(index, 1);
+    this.saveData();
+    this.changedQuestions.next(this.questions.slice());
+  }
+
+  getQuestion(id: number) {
+    return this.questions[id];
   }
 
   saveData() {

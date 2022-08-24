@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { question } from 'src/app/_models/question.model';
 
 import { QuestionService } from '../../_services/question.service';
 
@@ -18,12 +19,25 @@ export class AddEditQuestionComponent implements OnInit {
     options: this.questionOptions,
   });
 
+  question: question | undefined;
+
+  editMode: boolean = false;
+
+  id!: number;
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private questionService: QuestionService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.editMode = params['id'] != null;
+      this.initForm();
+    });
+  }
 
   onAddOption() {
     (<FormArray>this.questionForm.get('options')).push(
@@ -34,18 +48,36 @@ export class AddEditQuestionComponent implements OnInit {
   }
 
   initForm() {
-    // let questionOptions = new FormArray([]);
-    // this.questionForm = new FormGroup({
-    //   text: new FormControl('', Validators.required),
-    //   questionType: new FormControl('', Validators.required),
-    //   options: questionOptions,
-    // });
+    if (this.editMode) {
+      this.question = this.questionService.getQuestion(this.id);
+      this.questionForm.patchValue({
+        text: this.question.text,
+        questionType: this.question.questionType
+      })
+      if (this.question['options']) {
+        for (let option of this.question.options) {
+          (<FormArray>this.questionForm.get('options')).push(
+            new FormGroup({
+              optionText: new FormControl(option.optionText, Validators.required),
+            })
+          );
+        }
+      }
+    }
   }
 
   onSubmit() {
-    let question = this.questionForm.value;
-    question['createdDate'] = new Date();
-    this.questionService.addQuestion(question);
+    console.log(this.questionForm.value);
+    
+    let newQuestion = this.questionForm.value;
+    if (!this.editMode) {
+      newQuestion['createdDate'] = new Date();
+      this.questionService.addQuestion(newQuestion);
+    } else {
+      newQuestion['createdDate'] = this.question?.createdDate;
+      this.questionService.updateQuestion(this.id, newQuestion);
+    }
+    this.cancel();
   }
 
   onDeleteOption(index: number) {

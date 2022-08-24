@@ -3,7 +3,8 @@
   <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill" class="title-input">
       <mat-label>Question</mat-label>
-      <input matInput placeholder="" formControlName="text">
+      <textarea matInput cdkTextareaAutosize formControlName="text"></textarea>
+      <!-- <mat-error *ngIf="questionForm.get('text').errors">Please enter a valid question</mat-error> -->
     </mat-form-field>
 
     <div>
@@ -34,9 +35,9 @@
       </button>
     </div>
 
-    <div>
+    <div class="action-button">
       <button mat-raised-button color="accent" class="" [disabled]="questionForm.invalid" aria-label="" type="submit">
-        <mat-icon>save</mat-icon> Save Question
+        <mat-icon>save</mat-icon> {{ editMode ? 'Update' : 'Save'}} Question
       </button>
       <button mat-raised-button color="warn" class="" aria-label="" (click)="cancel()">
         <mat-icon>cancel</mat-icon> Cancel

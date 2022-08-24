@@ -22,6 +22,14 @@ const routes: Routes = [
     path: 'create',
     component: AddEditQuestionComponent,
   },
+  {
+    path: ':id/edit',
+    component: AddEditQuestionComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '/question-management',
+  },
 ];
 
 @NgModule({
