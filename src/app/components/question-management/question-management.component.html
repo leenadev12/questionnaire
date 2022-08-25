@@ -21,10 +21,10 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element; let i = index">
-        <button mat-mini-fab matTooltip="Edit Question" aria-label="edit question" (click)="editQuestion(i)">
+        <button mat-icon-button color="primary" matTooltip="Edit Question" aria-label="edit question" (click)="editQuestion(i)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-mini-fab color="warn" matTooltip="Delete Question" aria-label="delete question" (click)="deleteQuestion(i)">
+        <button mat-icon-button color="warn" matTooltip="Delete Question" aria-label="delete question" (click)="confirmationPopup(i)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
@@ -34,6 +34,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-  </mat-paginator>
+  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+  </mat-paginator> -->
 </div>

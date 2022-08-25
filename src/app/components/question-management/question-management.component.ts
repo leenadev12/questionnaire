@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { QuestionService } from '../../_services/question.service';
 import { question } from '../../_models/question.model';
+import { SortByTimePipe } from "../../_pipes/sort-by-time.pipe";
 
 @Component({
   selector: 'app-question-management',
@@ -30,7 +32,8 @@ export class QuestionManagementComponent implements OnInit, OnDestroy {
 
   constructor(
     private questionService: QuestionService,
-    private router: Router
+    private router: Router,
+    private sortByTimePipe: SortByTimePipe
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,7 @@ export class QuestionManagementComponent implements OnInit, OnDestroy {
         this.questionData = questions;
       }
     );
+    this.sortByTimePipe.transform(this.questionData, 'createdDate');
   }
 
   editQuestion(index: number) {
@@ -48,6 +52,27 @@ export class QuestionManagementComponent implements OnInit, OnDestroy {
 
   deleteQuestion(index: number) {
     this.questionService.deleteQuestion(index);
+    Swal.fire(
+      'Deleted!',
+      'Your question has been deleted.',
+      'success'
+    )
+  }
+
+  confirmationPopup(index: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteQuestion(index);
+      }
+    })
   }
 
   ngOnDestroy(): void {

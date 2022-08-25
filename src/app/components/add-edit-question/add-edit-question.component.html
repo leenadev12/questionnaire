@@ -1,10 +1,12 @@
 <div class="question-form">
-  <h3>Create Question</h3>
+  <h1 class="mat-h1">{{ editMode ? 'Update' : 'Create' }} Question</h1>
   <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill" class="title-input">
       <mat-label>Question</mat-label>
       <textarea matInput cdkTextareaAutosize formControlName="text"></textarea>
-      <!-- <mat-error *ngIf="questionForm.get('text').errors">Please enter a valid question</mat-error> -->
+      <mat-error *ngIf="questionForm.get('text')?.invalid && questionForm.get('text')?.touched">
+        Please enter a valid question
+      </mat-error>
     </mat-form-field>
 
     <div>
@@ -25,9 +27,12 @@
         <mat-form-field appearance="fill" class="title-input">
           <mat-label>Option {{i+1}}</mat-label>
           <input matInput placeholder="Please enter an option" formControlName="optionText">
+          <mat-error *ngIf="questionForm.controls['options'].invalid && questionForm.controls['options'].touched">
+            Please enter a valid option
+          </mat-error>
         </mat-form-field>
-        <button mat-mini-fab class="" color="warn" matTooltip="Delete option" aria-label="" (click)="onDeleteOption(i)">
-          <mat-icon>delete</mat-icon>
+        <button mat-icon-button class="" color="warn" matTooltip="Delete option" aria-label="" (click)="onDeleteOption(i)">
+          <mat-icon>cancel</mat-icon>
         </button>
       </div>
       <button mat-raised-button color="accent" type="button" class="" aria-label="" (click)="onAddOption()">
@@ -36,7 +41,7 @@
     </div>
 
     <div class="action-button">
-      <button mat-raised-button color="accent" class="" [disabled]="questionForm.invalid" aria-label="" type="submit">
+      <button mat-raised-button color="primary" class="" [disabled]="questionForm.invalid" aria-label="" type="submit">
         <mat-icon>save</mat-icon> {{ editMode ? 'Update' : 'Save'}} Question
       </button>
       <button mat-raised-button color="warn" class="" aria-label="" (click)="cancel()">

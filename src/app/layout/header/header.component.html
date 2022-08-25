@@ -1,10 +1,12 @@
 <mat-toolbar color="primary">
-  <button mat-button class="" aria-label="" (click)="navigate('home')">
+  <button mat-button aria-label="" (click)="navigate('home')">
     <mat-icon>home</mat-icon> Home
   </button>
-  <!-- <span (click)="navigate('home')">Home</span> -->
+  <button mat-button aria-label="" (click)="navigate('answer')">
+    <mat-icon>check</mat-icon> Answers
+  </button>
   <span class="spacer"></span>
-  <button mat-button class="create-btn" aria-label="" (click)="navigate('create')">
+  <button *ngIf="currentUrl === '/question-management'" mat-button class="create-btn" aria-label="" (click)="navigate('create')">
     <mat-icon>add_circle</mat-icon> Create Question
   </button>
 </mat-toolbar>

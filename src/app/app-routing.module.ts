@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { QuestionManagementComponent } from './components/question-management/question-management.component';
 import { AddEditQuestionComponent } from './components/add-edit-question/add-edit-question.component';
+import { AnswerQuestionComponent } from "./components/answer-question/answer-question.component";
 
 const routes: Routes = [
   {
@@ -25,6 +27,10 @@ const routes: Routes = [
   {
     path: ':id/edit',
     component: AddEditQuestionComponent,
+  },
+  {
+    path: 'answer',
+    component: AnswerQuestionComponent,
   },
   {
     path: '**',
