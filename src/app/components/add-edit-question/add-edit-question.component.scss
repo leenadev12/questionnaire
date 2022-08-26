@@ -14,12 +14,18 @@
     width: 100%;
   }
 
+  .mat-h1{
+    font-size: 30px;
+    padding-top: 30px;
+  }
+
   .mat-radio-button {
     margin: 8px 0;
   }
 
   .option-fields {
     display: flex;
+    margin-bottom: 16px;
 
     button {
       margin-top: 8px;
@@ -33,5 +39,9 @@
     button {
       margin-right: 16px;
     }
+  }
+
+  .question-type {
+    margin-top: 16px;
   }
 }

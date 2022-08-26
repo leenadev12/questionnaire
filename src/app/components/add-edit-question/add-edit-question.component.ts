@@ -70,8 +70,6 @@ export class AddEditQuestionComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.questionForm.value);
-
     let newQuestion = this.questionForm.value;
     newQuestion['answer'] = [];
     if (!this.editMode) {

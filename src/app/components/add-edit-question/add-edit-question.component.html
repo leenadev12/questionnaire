@@ -9,7 +9,7 @@
       </mat-error>
     </mat-form-field>
 
-    <div>
+    <div class="question-type">
       <label>Question Type: </label>
       <br>
       <mat-radio-group formControlName="questionType">
@@ -22,7 +22,7 @@
     </div>
 
     <div *ngIf="questionForm.value.questionType !== 'open'" formArrayName="options">
-      <p>Please add two or more options</p>
+      <p>Please add minimum two and maximum six options</p>
       <div class="option-fields" *ngFor="let item of controls; let i=index" [formGroupName]="i">
         <mat-form-field appearance="fill" class="title-input">
           <mat-label>Option {{i+1}}</mat-label>
@@ -35,9 +35,11 @@
           <mat-icon>cancel</mat-icon>
         </button>
       </div>
-      <button mat-raised-button color="accent" type="button" (click)="onAddOption()">
-        <mat-icon>add</mat-icon> Add option
-      </button>
+      <div>
+        <button mat-raised-button [disabled]="questionForm.value.questionType !== 'open' && questionForm.value.options.length>5" color="accent" type="button" (click)="onAddOption()">
+          <mat-icon>add</mat-icon> Add option
+        </button>
+      </div>
     </div>
 
     <div class="action-button">

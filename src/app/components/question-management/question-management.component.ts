@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { QuestionService } from '../../_services/question.service';
 import { question } from '../../_models/question.model';
-import { SortByTimePipe } from "../../_pipes/sort-by-time.pipe";
+import { SortByTimePipe } from '../../_pipes/sort-by-time.pipe';
 
 @Component({
   selector: 'app-question-management',
@@ -52,11 +52,12 @@ export class QuestionManagementComponent implements OnInit, OnDestroy {
 
   deleteQuestion(index: number) {
     this.questionService.deleteQuestion(index);
-    Swal.fire(
-      'Deleted!',
-      'Your question has been deleted.',
-      'success'
-    )
+    Swal.fire({
+      title: 'Deleted!',
+      text: 'Your question has been deleted',
+      timer: 3000,
+      icon: 'success',
+    });
   }
 
   confirmationPopup(index: number) {
@@ -67,12 +68,12 @@ export class QuestionManagementComponent implements OnInit, OnDestroy {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.deleteQuestion(index);
       }
-    })
+    });
   }
 
   ngOnDestroy(): void {
