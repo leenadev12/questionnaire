@@ -16,13 +16,14 @@ for install dependency you can run:
 ### `npm install`
 
 for start the application you can run:
-### `ng serve`
+### Run `ng serve` for a server. Navigate to `http://localhost:4200/`
 
 ## Technology and Tools Used
 - Angular 13.3.11
 - Material UI
+- Local Storage
 
 ## Estimation
-- Question Management Page - 1 hours
+- Question Management Page - 1 hour
 - Create question page & Question edit page - 2 hours
 - Lists of Questions Page - 3 hours
