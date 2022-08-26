@@ -1,4 +1,9 @@
-<h3 class="mat-h1" *ngIf="!questionData.length">Curently there are no question, Please <a [routerLink]="['/create']">click here</a> to create question</h3>
+<div class="no-question-card">
+  <mat-card *ngIf="!questionData.length">
+    <mat-card-title>Curently there is no question, Please <a [routerLink]="['/create']">click here</a> to create question</mat-card-title>
+  </mat-card>
+</div>
+
 <div *ngIf="questionData.length" class="mat-elevation-z8 question-table">
   <table mat-table [dataSource]="questionData">
 

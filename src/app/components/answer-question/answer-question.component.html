@@ -1,4 +1,9 @@
-<h3 class="mat-h1" *ngIf="!questionList.length">Curently there are no question, Please <a [routerLink]="['/create']">click here</a> to create question</h3>
+<div class="no-question-card">
+  <mat-card *ngIf="!questionList.length">
+    <mat-card-title>Curently there is no question, Please <a [routerLink]="['/create']">click here</a> to create question</mat-card-title>
+  </mat-card>
+</div>
+
 <div class="wrapper" *ngIf="questionList.length">
   <div>
     <h1 class="mat-h1 header">Unanswered Question</h1>
@@ -10,7 +15,7 @@
             <mat-form-field *ngIf="question.questionType === 'open'" appearance="outline" class="title-input">
               <mat-label>Answer</mat-label>
               <textarea matInput name="open" maxlength="255" cdkTextareaAutosize #textAnswer="ngModel" [(ngModel)]="question.answer[0]"></textarea>
-              <mat-hint>*Maximum 250 characters allowed</mat-hint>
+              <mat-hint>*Maximum 255 characters allowed</mat-hint>
             </mat-form-field>
 
             <div *ngIf="question.questionType !== 'open'" class="radio-font">
@@ -34,7 +39,7 @@
             <button mat-raised-button type="submit" *ngIf="((question.questionType === 'open' || question.questionType === 'singleSelect') && question.answer[0]) || (question.questionType === 'multiSelect' && getValidAnswer(i))" color="primary">
               <mat-icon>save</mat-icon> Save Answer
             </button>
-            <button mat-raised-button class="clear-button" color="accent" (click)="clearForm(i)" *ngIf="((question.questionType === 'open' || question.questionType === 'singleSelect') && question.answer[0]) || (question.questionType === 'multiSelect' && getValidAnswer(i))" color="primary">
+            <button mat-raised-button type="button" class="clear-button" color="accent" (click)="clearForm(i)" *ngIf="((question.questionType === 'open' || question.questionType === 'singleSelect') && question.answer[0]) || (question.questionType === 'multiSelect' && getValidAnswer(i))" color="primary">
               <mat-icon>cancel</mat-icon> Clear
             </button>
           </mat-card-actions>
