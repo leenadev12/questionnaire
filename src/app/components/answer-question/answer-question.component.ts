@@ -25,7 +25,10 @@ export class AnswerQuestionComponent implements OnInit, OnDestroy {
     this.unansweredQuestionList = this.questionService.getQuestionList();
     this.changedQuestion = this.questionService.changedQuestions.subscribe(
       (questions: question[]) => {
-        this.unansweredQuestionList = this.sortByTimePipe.transform(questions, 'createdDate');
+        let temp = this.sortByTimePipe.transform(questions, 'createdDate');
+        this.unansweredQuestionList = temp.filter(
+          (element) => !element.isAnswered
+        );
         this.questionList = questions;
       }
     );
@@ -58,7 +61,7 @@ export class AnswerQuestionComponent implements OnInit, OnDestroy {
   }
 
   getValidAnswer(index: number) {
-    let test = this.questionList[index].answer.some(
+    let test = this.unansweredQuestionList[index].answer.some(
       (element) => element === true
     );
     return test;

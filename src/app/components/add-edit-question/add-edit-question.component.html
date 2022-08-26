@@ -5,7 +5,7 @@
       <mat-label>Question</mat-label>
       <textarea matInput cdkTextareaAutosize formControlName="text"></textarea>
       <mat-error *ngIf="questionForm.get('text')?.invalid && questionForm.get('text')?.touched">
-        Please enter a valid question
+        Question required
       </mat-error>
     </mat-form-field>
 
@@ -28,7 +28,7 @@
           <mat-label>Option {{i+1}}</mat-label>
           <input matInput placeholder="Please enter an option" formControlName="optionText">
           <mat-error *ngIf="questionForm.controls['options'].invalid && questionForm.controls['options'].touched">
-            Please enter a valid option
+            Option required
           </mat-error>
         </mat-form-field>
         <button mat-icon-button color="warn" matTooltip="Remove option" (click)="onDeleteOption(i)">

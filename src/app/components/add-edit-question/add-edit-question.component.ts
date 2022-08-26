@@ -77,10 +77,8 @@ export class AddEditQuestionComponent implements OnInit {
         newQuestion.options.forEach(() => {
           newQuestion['answer'].push(false);
         });
-      // } else if (newQuestion.questionType === 'singleSelect') {
-      //   newQuestion['answer'].push('');
       } else {
-        newQuestion['answer'].push('');
+        newQuestion['answer'][0] = '';
       }
       newQuestion['createdDate'] = new Date();
       newQuestion['isAnswered'] = false;

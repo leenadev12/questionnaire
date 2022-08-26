@@ -1,4 +1,5 @@
-<div class="wrapper">
+<h3 class="mat-h1" *ngIf="!questionList.length">Curently there are no question, Please <a [routerLink]="['/create']">click here</a> to create question</h3>
+<div class="wrapper" *ngIf="questionList.length">
   <div>
     <h1 class="mat-h1 header">Unanswered Question</h1>
     <div class="card" *ngFor="let question of unansweredQuestionList | sortByTime: 'createdDate'; let i = index">
@@ -17,7 +18,7 @@
               <br>
               <mat-radio-group>
                 <ng-container *ngFor="let option of question.options; let optionIndex=index;">
-                  <mat-radio-button name="singleSelect" [checked]="question.answer[0] == optionIndex" ngDefaultControl #singleSelectAnswer="ngModel" [value]="optionIndex" [(ngModel)]="question.answer[0]" *ngIf="question.questionType === 'singleSelect'">
+                  <mat-radio-button name="singleSelect" [checked]="question.answer[0] == option.optionText" ngDefaultControl #singleSelectAnswer="ngModel" [value]="option.optionText" [(ngModel)]="question.answer[0]" *ngIf="question.questionType === 'singleSelect'">
                     {{ option.optionText }}
                   </mat-radio-button>
                   <mat-checkbox name="multiSelect" [(ngModel)]="question.answer[optionIndex]" #multiSelectAnswer="ngModel" *ngIf="question.questionType === 'multiSelect'">
@@ -58,7 +59,7 @@
             <br>
             <mat-radio-group>
               <ng-container *ngFor="let option of question.options; let optionIndex=index;">
-                <mat-radio-button [checked]="question.answer[0] == optionIndex" disabled ngDefaultControl [value]="optionIndex" [(ngModel)]="question.answer[0]" *ngIf="question.questionType === 'singleSelect'">
+                <mat-radio-button [checked]="question.answer[0] == option.optionText" disabled ngDefaultControl [value]="optionIndex" [(ngModel)]="question.answer[0]" *ngIf="question.questionType === 'singleSelect'">
                   {{ option.optionText }}
                 </mat-radio-button>
                 <mat-checkbox [(ngModel)]="question.answer[optionIndex]" disabled *ngIf="question.questionType === 'multiSelect'">
@@ -71,7 +72,7 @@
 
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button color="primary" (click)="onRevertAnswer(i)">
+          <button mat-raised-button color="primary" (click)="onRevertAnswer(i)">
             <mat-icon>refresh</mat-icon>Revert Answer
           </button>
         </mat-card-actions>

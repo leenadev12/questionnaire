@@ -14,7 +14,7 @@ export class QuestionService {
   getQuestionList() {
     let temp = localStorage.getItem('questions');
     if (!temp) {
-      localStorage.setItem('questions', '{}');
+      localStorage.setItem('questions', '[]');
     } else {
       this.questions = JSON.parse(localStorage.getItem('questions') || '{}');
     }
