@@ -31,20 +31,20 @@
             Please enter a valid option
           </mat-error>
         </mat-form-field>
-        <button mat-icon-button class="" color="warn" matTooltip="Delete option" aria-label="" (click)="onDeleteOption(i)">
+        <button mat-icon-button color="warn" matTooltip="Remove option" (click)="onDeleteOption(i)">
           <mat-icon>cancel</mat-icon>
         </button>
       </div>
-      <button mat-raised-button color="accent" type="button" class="" aria-label="" (click)="onAddOption()">
+      <button mat-raised-button color="accent" type="button" (click)="onAddOption()">
         <mat-icon>add</mat-icon> Add option
       </button>
     </div>
 
     <div class="action-button">
-      <button mat-raised-button color="primary" class="" [disabled]="questionForm.invalid" aria-label="" type="submit">
+      <button mat-raised-button color="primary" [disabled]="questionForm.invalid || (questionForm.value.questionType !== 'open' && questionForm.value.options.length<2)" aria-label="" type="submit">
         <mat-icon>save</mat-icon> {{ editMode ? 'Update' : 'Save'}} Question
       </button>
-      <button mat-raised-button color="warn" class="" aria-label="" (click)="cancel()">
+      <button mat-raised-button color="warn" (click)="cancel()">
         <mat-icon>cancel</mat-icon> Cancel
       </button>
     </div>

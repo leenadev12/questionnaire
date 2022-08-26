@@ -11,7 +11,7 @@ import { QuestionService } from '../../_services/question.service';
   styleUrls: ['./add-edit-question.component.scss'],
 })
 export class AddEditQuestionComponent implements OnInit {
-  questionOptions = new FormArray([], Validators.minLength(2));
+  questionOptions = new FormArray([], [Validators.minLength(2), Validators.maxLength(6)]);
 
   questionForm: FormGroup = new FormGroup({
     text: new FormControl('', Validators.required),
@@ -73,7 +73,17 @@ export class AddEditQuestionComponent implements OnInit {
     console.log(this.questionForm.value);
 
     let newQuestion = this.questionForm.value;
+    newQuestion['answer'] = [];
     if (!this.editMode) {
+      if (newQuestion.questionType === 'multiSelect') {
+        newQuestion.options.forEach(() => {
+          newQuestion['answer'].push(false);
+        });
+      // } else if (newQuestion.questionType === 'singleSelect') {
+      //   newQuestion['answer'].push('');
+      } else {
+        newQuestion['answer'].push('');
+      }
       newQuestion['createdDate'] = new Date();
       newQuestion['isAnswered'] = false;
       this.questionService.addQuestion(newQuestion);

@@ -1,6 +1,13 @@
 .wrapper {
   display: flex;
   justify-content: space-around;
+  margin-top: 16px;
+
+  .header {
+    text-align: center;
+    font-size: 36px;
+    text-decoration: underline;
+  }
 
   .vl {
     border-left: 6px solid #3f51b5;
@@ -8,10 +15,27 @@
   }
 
   .card {
-    width: 400px;
+    width: 800px;
 
     .mat-card {
       margin: 10px;
+      border: 1px solid #3f51b5;
+
+      p {
+        font-size: 24px;
+      }
+
+      .mat-form-field {
+        width: 100%;
+      }
+
+      .mat-radio-button {
+        margin-top: 8px;
+      }
+
+      .clear-button {
+        background-color: #ff4081;
+      }
     }
   }
 }

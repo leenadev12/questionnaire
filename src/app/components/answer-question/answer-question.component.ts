@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { question } from '../../_models/question.model';
 import { QuestionService } from '../../_services/question.service';
 import { AnswerService } from '../../_services/answer.service';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-answer-question',
@@ -19,25 +19,29 @@ export class AnswerQuestionComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private answerService: AnswerService
-  ) {}
-
-  ngOnInit(): void {
-    this.answerService.filterQuestion();
+  ) {
     this.questionList = this.questionService.getQuestionList();
     this.changedQuestion = this.questionService.changedQuestions.subscribe(
       (questions: question[]) => {
         this.questionList = questions;
       }
     );
-    this.initForm();
   }
 
-  onSaveAnswer(index: number) {
-    console.log('index', this.questionList[index]);
-    let updatedQuestion: any = this.questionList[index];
-    updatedQuestion.isAnswered = true;
-    updatedQuestion['answeredDate'] = new Date();
-    this.questionService.updateQuestion(index, updatedQuestion);
+  ngOnInit(): void {
+    this.answerService.filterQuestion();
+  }
+
+  onSaveAnswer(form: NgForm, index: number) {
+    if (!form.valid) {
+      console.log(form);
+    } else {
+      console.log('index', this.questionList[index]);
+      let updatedQuestion: any = this.questionList[index];
+      updatedQuestion.isAnswered = true;
+      updatedQuestion['answeredDate'] = new Date();
+      this.questionService.updateAnswer(updatedQuestion);
+    }
   }
 
   onRevertAnswer(index: number) {
@@ -45,14 +49,31 @@ export class AnswerQuestionComponent implements OnInit {
     let updatedQuestion: any = this.questionList[index];
     updatedQuestion.isAnswered = false;
     if (updatedQuestion.questionType !== 'open') {
-      updatedQuestion.options.forEach((option: { checked: any; }) => {
-        option.checked = false;
+      let newAnswer = updatedQuestion.answer.map((element: boolean) => {
+        element = element ? false : true;
       });
+      updatedQuestion.answer = newAnswer;
     } else {
-      updatedQuestion.answer = '';
+      updatedQuestion.answer[0] = '';
     }
-    this.questionService.updateQuestion(index, updatedQuestion);
+    this.questionService.updateAnswer(updatedQuestion);
   }
 
-  initForm() {}
+  getValidAnswer(index: number) {
+    let test = this.questionList[index].answer.some(
+      (element) => element === true
+    );
+    return test;
+  }
+
+  clearForm(index: number) {
+    if (this.questionList[index].questionType !== 'open') {
+      let newAnswer = this.questionList[index].answer.map((element: boolean) => {
+        element = element ? false : true;
+      });
+      this.questionList[index].answer = newAnswer;
+    } else {
+      this.questionList[index].answer[0] = '';
+    }
+  }
 }

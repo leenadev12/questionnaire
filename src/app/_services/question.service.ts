@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { question } from "../_models/question.model";
+
+import { question } from '../_models/question.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +12,18 @@ export class QuestionService {
   constructor() {}
 
   getQuestionList() {
-    let temp = localStorage.getItem("questions");
+    let temp = localStorage.getItem('questions');
     if (!temp) {
-      localStorage.setItem("questions", '{}');
+      localStorage.setItem('questions', '{}');
     } else {
-      this.questions = JSON.parse(localStorage.getItem("questions") || '{}');
+      this.questions = JSON.parse(localStorage.getItem('questions') || '{}');
     }
     this.changedQuestions.next(this.questions.slice());
     return this.questions;
   }
 
   addQuestion(question: question) {
-    this.questions.push(question)
+    this.questions.push(question);
     this.saveData();
     this.changedQuestions.next(this.questions.slice());
   }
@@ -39,11 +40,19 @@ export class QuestionService {
     this.changedQuestions.next(this.questions.slice());
   }
 
+  updateAnswer(revertQuestion: question) {
+    let index = this.questions.findIndex(
+      (question: question) =>
+        question.createdDate === revertQuestion.createdDate
+    );
+    this.updateQuestion(index, revertQuestion);
+  }
+
   getQuestion(id: number) {
     return this.questions[id];
   }
 
   saveData() {
-    localStorage.setItem("questions", JSON.stringify(this.questions))
+    localStorage.setItem('questions', JSON.stringify(this.questions));
   }
 }
